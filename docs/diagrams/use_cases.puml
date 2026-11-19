@@ -1,0 +1,34 @@
+@startuml
+
+left to right direction
+
+actor "Responsable des données" as Responsable
+actor "Gestionnaire" as Gestionnaire
+actor "Analyste de données" as Analyste
+
+rectangle "Ambulance Analytics" {
+
+    usecase "Importer les données" as UC1
+    usecase "Consulter le rapport d'importation" as UC2
+    usecase "Consulter les interventions" as UC3
+    usecase "Consulter les indicateurs" as UC4
+    usecase "Visualiser les graphiques" as UC5
+    usecase "Filtrer les données" as UC6
+    usecase "Exporter les résultats" as UC7
+}
+
+Responsable -- UC1
+Responsable -- UC2
+
+Gestionnaire -- UC3
+Gestionnaire -- UC4
+Gestionnaire -- UC5
+Gestionnaire -- UC6
+
+Analyste -- UC3
+Analyste -- UC4
+Analyste -- UC5
+Analyste -- UC6
+Analyste -- UC7
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+
+class Region {
+    - region_id : Integer
+    - name : String
+}
+
+class InterventionType {
+    - type_id : Integer
+    - name : String
+}
+
+class Intervention {
+    - intervention_id : String
+    - priority : Integer
+    - call_received_at : DateTime
+    - arrival_at : DateTime
+    - /response_time_minutes : Float
+}
+
+Region "1" -- "0..*" Intervention : appartient à cette région
+InterventionType "1" -- "0..*" Intervention : catégorise
+
+@enduml
