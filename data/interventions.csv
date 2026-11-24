@@ -1,0 +1,6 @@
+id,region,delai_minutes
+INT-001,Outaouais,8
+INT-002,Montréal,12
+INT-003,Outaouais,20
+INT-004,Québec,10
+INT-005,Outaouais,15
