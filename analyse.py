@@ -1,70 +1,92 @@
 
 
+
 import csv
 
-# 1. Lire les interventions
-interventions = []
 
-with open("data/interventions.csv", "r", encoding="utf-8", newline="") as fichier:
-    lecteur = csv.DictReader(fichier)
-
-    for intervention in lecteur:
-        interventions.append(intervention)
+# 1. Lire les données du fichier CSV
+def lire_interventions(chemin_fichier):
+    with open(chemin_fichier, "r", encoding="utf-8", newline="") as fichier:
+        lecteur = csv.DictReader(fichier)
+        return list(lecteur)
 
 
-# 2. Compter les interventions
-nombre_interventions = len(interventions)
+# 2. Calculer les statistiques des délais
+def calculer_statistiques(interventions):
+    delais = []
+
+    for intervention in interventions:
+        delai = int(intervention["delai_minutes"])
+        delais.append(delai)
+
+    nombre = len(delais)
+
+    if nombre == 0:
+        return {
+            "nombre": 0,
+            "moyenne": None,
+            "maximum": None
+        }
+
+    return {
+        "nombre": nombre,
+        "moyenne": sum(delais) / nombre,
+        "maximum": max(delais)
+    }
 
 
-# 3. Préparer les statistiques
-total_delais = 0
-delais = []
-interventions_par_region = {}
+# 3. Compter les interventions par région
+def compter_par_region(interventions):
+    repartition = {}
+
+    for intervention in interventions:
+        region = intervention["region"]
+        repartition[region] = repartition.get(region, 0) + 1
+
+    return repartition
 
 
-# 4. Parcourir les interventions
-for intervention in interventions:
+# 4. Afficher les résultats
+def afficher_resultats(statistiques, repartition):
+    print("===== AMBULANCE ANALYTICS =====")
 
-    # Convertir et additionner le délai
-    delai = int(intervention["delai_minutes"])
-    total_delais += delai
-    delais.append(delai)
+    print(f"Nombre total d'interventions : {statistiques['nombre']}")
 
-    # Compter les interventions par région
-    region = intervention["region"]
+    if statistiques["nombre"] > 0:
+        print(f"Délai moyen : {statistiques['moyenne']:.1f} minutes")
+        print(f"Délai maximum : {statistiques['maximum']} minutes")
+    else:
+        print("Aucune intervention disponible.")
 
-    interventions_par_region[region] = (
-        interventions_par_region.get(region, 0) + 1
-    )
+    print("\nInterventions par région :")
 
+    if not repartition:
+        print("- Aucune intervention")
 
-# 5. Afficher les statistiques
-print("===== AMBULANCE ANALYTICS =====")
+    for region, nombre in repartition.items():
+        print(f"- {region} : {nombre}")
 
-print(f"Nombre total d'interventions : {nombre_interventions}")
-
-if nombre_interventions > 0:
-    moyenne = total_delais / nombre_interventions
-    delai_maximum = max(delais)
-
-    print(f"Délai moyen : {moyenne:.1f} minutes")
-    print(f"Délai maximum : {delai_maximum} minutes")
-else:
-    print("Aucune intervention disponible.")
+    print("================================")
 
 
-# 6. Afficher les interventions par région
-print("\nInterventions par région :")
+# 5. Fonction principale
+def main():
+    interventions = lire_interventions("data/interventions.csv")
 
-for region, nombre in interventions_par_region.items():
-    print(f"- {region} : {nombre}")
+    statistiques = calculer_statistiques(interventions)
 
-print("================================")
+    repartition = compter_par_region(interventions)
 
-# 7. Afficher la region ayant le plus d'interventions
+    afficher_resultats(statistiques, repartition)
 
-if interventions_par_region:
-    region_max = max(interventions_par_region, key=interventions_par_region.get)
-    nombre_max = interventions_par_region[region_max]
 
-    print(f"\nRégion avec le plus d'interventions : {region_max} ({nombre_max})")
+# 6. Point d'entrée du programme
+if __name__ == "__main__":
+    main()
+
+# 7. Compter le nombre de régions distinctes
+def compter_regions(interventions):
+    regions = set()
+    for intervention in interventions:
+        regions.add(intervention["region"])
+    return len(regions)
