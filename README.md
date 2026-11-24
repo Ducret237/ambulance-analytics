@@ -2,29 +2,71 @@
 
 ## Présentation
 
-Ambulance Analytics est un projet personnel d'apprentissage visant à développer une plateforme d'intégration, d'analyse et de visualisation de données fictives d'interventions ambulancières.
+Ambulance Analytics est un mini-projet personnel développé en Python dans le but de pratiquer la manipulation de fichiers CSV, les calculs statistiques, les dictionnaires et l'organisation du code.
 
-## Objectifs
+L'application analyse un jeu de données fictives d'interventions ambulancières et présente les principaux résultats dans le terminal.
 
-- Renforcer mes compétences en programmation Python.
-- Développer un pipeline d'intégration de données.
-- Nettoyer et valider les données.
-- Concevoir une base de données relationnelle.
-- Développer un tableau de bord interactif.
-- Appliquer les bonnes pratiques de développement avec Git et GitHub.
+## Fonctionnalités
 
-## Technologies prévues
+- Lecture des interventions à partir d'un fichier CSV.
+- Calcul du nombre total d'interventions.
+- Calcul du délai moyen d'intervention.
+- Calcul du délai maximum.
+- Comptage des interventions par région.
+- Tests automatisés simples.
 
-Python, Pandas, SQLite, SQL, Streamlit, Plotly, Pytest, Git et GitHub.
+## Technologies
 
-## Méthodologie
+- Python 3
+- Module `csv`
+- Module `unittest`
+- Git et GitHub
 
-Le projet sera développé progressivement, selon une démarche itérative inspirée des méthodes Agile, avec des commits réguliers, une documentation technique et des tests.
+Aucune bibliothèque externe n'est nécessaire.
+
+## Structure du projet
+
+```text
+ambulance-analytics/
+├── data/
+│   └── interventions.csv
+├── tests/
+│   └── test_analyse.py
+├── analyse.py
+├── README.md
+└── .gitignore
+```
+
+## Exécution
+
+Depuis le dossier principal du projet :
+
+```bash
+python analyse.py
+```
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## Données
 
-Toutes les données utilisées dans ce projet seront fictives. Aucune donnée médicale personnelle ou confidentielle ne sera utilisée.
+Le fichier `data/interventions.csv` contient uniquement des données fictives.
 
-## État du projet
+Les colonnes utilisées sont :
 
-En cours de développement — phase d'initialisation.
+- `id` : identifiant de l'intervention.
+- `region` : région associée.
+- `delai_minutes` : délai d'intervention en minutes.
+
+## Limites actuelles
+
+Cette première version suppose que le fichier CSV existe et que les délais sont des nombres entiers valides.
+
+Elle ne comporte pas d'interface graphique, de base de données ni de traitement avancé des erreurs.
+
+## Objectif pédagogique
+
+Ce projet permet de mettre en pratique les fondamentaux de Python et les bonnes pratiques de versionnement, de documentation et de tests logiciels.
